@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libreadline-dev \
     libssl-dev \
     libyaml-dev \
+    net-tools \
     sshpass \
     vim \
     zlib1g-dev \
@@ -28,7 +29,12 @@ RUN (curl -sL https://github.com/rbenv/rbenv-installer/raw/master/bin/rbenv-inst
  && ruby -v \
  && gem install bundler \
  && gem install rspec \
- && gem install cucumber \
- && gem install chromedriver-helper
+ && gem install cucumber
+ 
+## install chromedriver
+RUN curl https://chromedriver.storage.googleapis.com/75.0.3770.8/chromedriver_linux64.zip -o /tmp/chromedriver_linux64.zip \
+ && unzip /tmp/chromedriver_linux64.zip -d /root/.rbenv/shims/ \
+ && chmod 755 /root/.rbenv/shims/chromedriver \
+ && rm -f /tmp/chromedriver_linux64.zip
 
 ENTRYPOINT [ "/bin/bash" ]
